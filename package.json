@@ -1,0 +1,19 @@
+{
+  "name": "tantan",
+  "version": "0.0.1",
+  "description": "一个Node.js的轻量级高并发实时聊天组件",
+  "license": "CC0-1.0",
+  "author": {
+    "name": "Wenming Wang",
+    "email": "wangwenming1985@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/wangwenming/tantan.git"
+  },
+  "devDependencies": {
+    "mocha": "2.1.x",
+    "chai": "1.10.x",
+    "sockjs": "0.3.9"
+  }
+}
