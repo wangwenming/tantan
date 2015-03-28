@@ -23,7 +23,7 @@
         log('%s connected', ip);
 
         socket.on('close', function() {
-            totalConns++;
+            totalConns--;
             log('%s disconnected', ip);
         });
 
