@@ -1,5 +1,6 @@
 var expect = require('chai').expect;
 var unserialize = require('../unserialize').unserialize;
+var zlib = require('zlib');
 
 var anonyData = {
     id: '55152fca86de8b6a158b4576',
@@ -43,7 +44,11 @@ describe('unserialize', function () {
         var len = Buffer.byteLength(annoyMsg, 'utf8');
         var rawLen = Buffer.byteLength(rawAnnoyMsg, 'utf8');
         var ratio = Math.round(len / rawLen * 1000) / 10;
-        console.log('匿名压缩比： %d%, %dB ==> %dB', ratio, rawLen, len);
+
+        var buf = new Buffer(annoyMsg, 'utf-8');
+        zlib.gzip(buf, function (err, buffer) {
+            console.log('匿名压缩比： %d%, %dB ==> %dB, Gzip后 ==> %dB', ratio, rawLen, len, buffer.length);
+        });
 
         expect(JSON.stringify(unserializedData)).to.equal(rawAnnoyMsg);
     });
@@ -53,7 +58,11 @@ describe('unserialize', function () {
         var len = Buffer.byteLength(loginMsg, 'utf8');
         var rawLen = Buffer.byteLength(rawLoginMsg, 'utf8');
         var ratio = Math.round(len / rawLen * 1000) / 10;
-        console.log('登录压缩比： %d%, %dB ==> %dB', ratio, rawLen, len);
+
+        var buf = new Buffer(loginMsg, 'utf-8');
+        zlib.gzip(buf, function (err, buffer) {
+            console.log('登录压缩比： %d%, %dB ==> %dB, Gzip后 ==> %dB', ratio, rawLen, len, buffer.length);
+        });
 
         expect(JSON.stringify(unserializedData)).to.equal(rawLoginMsg);
     });

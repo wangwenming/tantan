@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>谈谈聊天Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+</head>
+<body>
+<p id="p"></p>
+<form style="display: none;">
+  <input id="input" style="width: 80%; height: 30px;" value="2">
+  <input type="submit" value="post" style="height: 30px; width: 100px; margin-top: 10px;">
+</form>
+
+<script src="./sockjs-0.3.min.js"></script>
+<script src="./chat-client.js"></script>
+<script>
+socket.init({
+    url: 'http://localhost:9099/chat-daemon',
+    topicId: 1
+});
+
+var ui = /ui/i.test(location.search);
+if (ui) {
+    var p = document.getElementById('p');
+    var form = document.forms[0];
+    var input = document.getElementById('input');
+
+    socket.events.newMsg = function(data) {
+        p.innerHTML = data + '<br>' + p.innerHTML;
+    };
+
+    form.addEventListener('submit', function(e) {
+        if (input.value) {
+            socket.post(input.value);
+            input.value = '';
+        }
+        e.preventDefault();
+    }, false);
+
+    form.style.display = 'block';
+}
+</script>
+</body>
+</html>
